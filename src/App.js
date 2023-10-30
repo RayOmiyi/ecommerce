@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { Feed, Navbar, ProductDetail, Products } from './components'
+import { Route, Routes } from 'react-router-dom'
+import Login from './routes/Login'
+import Signup from './routes/SignUp'
+import { AuthContextProvider } from './context/AuthContext'
+import { fetchFromAPI } from './utils/fetchFromAPI'
+const App = () => {
+     const [products, setProducts] = useState([]);
 
-function App() {
+  // Function to fetch products
+  const fetchProducts = async () => {
+    try {
+      const data = await fetchFromAPI('products/list');
+      setProducts(data.payload.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AuthContextProvider>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Feed/>}/>
+        <Route path='/products' 
+        element={<Products products={products} fetchProducts={fetchProducts} />}/>
+        <Route path='/products/:id' element={<ProductDetail/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+      </Routes>
+      </AuthContextProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

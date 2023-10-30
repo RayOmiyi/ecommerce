@@ -1,0 +1,25 @@
+.navbar {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-list {
+    display: flex;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.nav-item {
+    padding-left: 20px;
+}
+
+.logo {
+    /* You can adjust the margin if needed */
+    margin: 10px;
+}
